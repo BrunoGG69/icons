@@ -3,125 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Icons Repository</title>
+    <title>Icons and Repos</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9fb;
-            color: #333;
+            margin: 0;
+            padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        header h1 {
-            font-size: 2.5rem;
-            color: #007bff;
-        }
-        header p {
-            font-size: 1.1rem;
-            color: #555;
-        }
-        .folder {
-            margin: 20px 0;
-            width: 100%;
-            max-width: 600px;
-        }
-        .folder h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            background-color: #f4f4f9;
             color: #333;
         }
-        ul {
-            list-style: none;
-            padding-left: 0;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .container {
+            text-align: center;
         }
-        li {
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-        }
-        li:last-child {
-            border-bottom: none;
-        }
-        li a {
-            text-decoration: none;
+        a {
             color: #007bff;
+            text-decoration: none;
         }
-        li a:hover {
+        a:hover {
             text-decoration: underline;
-        }
-        footer {
-            margin-top: 40px;
-            color: #666;
-            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Icons Repository</h1>
+    <div class="container">
+        <h1>Welcome!</h1>
         <p>This repository is used for fetching icons and images for my website.</p>
-        <p>To access an icon, use the format:</p>
+        <p>To access an icon, use the following URL format:</p>
         <code>icons.brunogg.in/logos/&lt;icon-name&gt;.svg</code>
-    </header>
-
-    <div id="content">
-        <div class="folder" id="logos-folder">
-            <h2>Logos</h2>
-            <ul id="logos-list"></ul>
-        </div>
-        <div class="folder" id="repos-folder">
-            <h2>Repos</h2>
-            <ul id="repos-list"></ul>
-        </div>
+        <p>Replace <code>&lt;icon-name&gt;</code> with the desired icon's filename.</p>
+        <p>For example:</p>
+        <code>icons.brunogg.in/logos/sample-icon.svg</code>
     </div>
-
-    <footer>
-        &copy; 2024 by brunogg.in
-    </footer>
-
-    <script>
-        async function fetchFolderContents(folder, listId) {
-            try {
-                const response = await fetch(folder);
-                if (!response.ok) {
-                    document.getElementById(listId).innerHTML = '<li>Unable to fetch contents.</li>';
-                    return;
-                }
-                const text = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(text, 'text/html');
-                const links = [...doc.querySelectorAll('a')];
-
-                const items = links
-                    .filter(link => !link.textContent.includes('Parent Directory'))
-                    .map(link => `<li><a href="${folder}${link.getAttribute('href')}" target="_blank">${link.textContent}</a></li>`)
-                    .join('');
-
-                document.getElementById(listId).innerHTML = items || '<li>No files available.</li>';
-            } catch (error) {
-                document.getElementById(listId).innerHTML = '<li>Error fetching contents.</li>';
-                console.error(error);
-            }
-        }
-
-        // Fetch contents for each folder
-        fetchFolderContents('./logos/', 'logos-list');
-        fetchFolderContents('./repos/', 'repos-list');
-    </script>
 </body>
 </html>
